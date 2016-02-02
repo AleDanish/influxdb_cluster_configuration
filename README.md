@@ -1,7 +1,6 @@
 # influxdb_cluster_configuration
 
 If the current node is master:
-
 bash cluster_config.sh
 
 If the current node is slave-n:
