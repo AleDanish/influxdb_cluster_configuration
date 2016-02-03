@@ -3,7 +3,7 @@ echo "-> Database configuration"
 sudo apt-get purge influxdb
 mkdir -p /tmp/influxdb
 wget https://s3.amazonaws.com/influxdb/influxdb_0.9.6.1_amd64.deb -P /tmp/influxdb
-sudo dpkg -i /home/alessandro/influxdb_0.9.6.1_amd64.deb
+sudo dpkg -i /tmp/influxdb/influxdb_0.9.6.1_amd64.deb
 
 echo "-> Configuration file, hostname changes"
 myip=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
