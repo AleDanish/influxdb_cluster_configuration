@@ -1,22 +1,21 @@
 #!/bin/bash
 echo "-> Database configuration"
-#sudo apt-get purge influxdb
-#sudo dpkg -i /home/ubuntu/influxdb_0.9.6.1_amd64.deb
-
-echo "-> InfluxDb process stop"
-#sudo service influxdb stop
+sudo apt-get purge influxdb
+mkdir -p /tmp/influxdb
+wget https://s3.amazonaws.com/influxdb/influxdb_0.9.6.1_amd64.deb -P /tmp/influxdb
+sudo dpkg -i /home/alessandro/influxdb_0.9.6.1_amd64.deb
 
 echo "-> Configuration file, hostname changes"
 myip=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
-#sudo python string_substitution.py /etc/influxdb/influxdb.conf hostname $myip
+sudo python string_substitution.py /etc/influxdb/influxdb.conf hostname $myip
 
-#sudo touch /etc/default/influxdb
-#sudo chmod o+w /etc/default/influxdb
+sudo touch /etc/default/influxdb
+sudo chmod o+w /etc/default/influxdb
 
 if [ "$1" == "" ]; then
    #Master
    echo "-> Configuring MASTER host - Removing option file"
-  # sudo echo "" > /etc/default/influxdb
+   sudo echo "" > /etc/default/influxdb
 else
    #Slave
    echo "-> Configuring SLAVE host - Creating option file"
@@ -25,14 +24,14 @@ else
    do
       hosts=$hosts,$var:8088
    done
-   #sudo echo INFLUXD_OPTS=\"-join $hosts\" > /etc/default/influxdb
+   sudo echo INFLUXD_OPTS=\"-join $hosts\" > /etc/default/influxdb
 fi
 
 echo "-> Delete meta folder"
-#sudo rm -rf /var/opt/influxdb/meta/*
-#sudo rm -rf /var/lib/influxdb/meta/*
+sudo rm -rf /var/opt/influxdb/meta/*
+sudo rm -rf /var/lib/influxdb/meta/*
 
-echo "-> InfluxDb process start"
-#sudo service influxdb start
+echo "-> InfluxDb process restart"
+sudo service influxdb restart
 echo "-> Finish setting up host!"
 
