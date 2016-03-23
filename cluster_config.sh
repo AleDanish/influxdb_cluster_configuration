@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "-> Database configuration"
-sudo apt-get purge influxdb
+/usr/bin/yes | sudo apt-get purge influxdb
 mkdir -p /tmp/influxdb
 wget https://s3.amazonaws.com/influxdb/influxdb_0.9.6.1_amd64.deb -P /tmp/influxdb
 sudo dpkg -i /tmp/influxdb/influxdb_0.9.6.1_amd64.deb
