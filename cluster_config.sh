@@ -7,9 +7,9 @@ sudo dpkg -i /tmp/influxdb/influxdb_0.9.6.1_amd64.deb
 
 echo "-> Configuration file, hostname changes"
 myip=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
-#myfloatingip= cat < ../influxdb_floatingip
+myfloatingip=$(<../influxdb_floatingip)
 echo $myfloatingip
-sudo python string_substitution.py /etc/influxdb/influxdb.conf hostname $myip
+sudo python string_substitution.py /etc/influxdb/influxdb.conf hostname $myfloatingip
 
 sudo touch /etc/default/influxdb
 sudo chmod o+w /etc/default/influxdb
